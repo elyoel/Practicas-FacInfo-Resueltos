@@ -134,7 +134,6 @@ end;
 var
   lista: lista_c;
   cant_gen: arreglo_genero;
-  un_dni: integer;
 begin
   lista:= Nil;
   inicializarVector(cant_gen);
@@ -142,7 +141,6 @@ begin
   recorrerLista(lista, cant_gen);
   calcularMaximos(cant_gen);
 
-  read(un_dni);
   eliminar(un_dni, lista);//le paso un dni x
 end.
 
