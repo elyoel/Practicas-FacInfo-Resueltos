@@ -14,7 +14,7 @@ type
     cod_auto: integer;
     origen: string;
     destino: string;
-    kilo: real;
+    km: real;
   end;
 
   lista_v = ^nodo_v;
@@ -22,15 +22,20 @@ type
     elem: viajes;
     sig: lista_v;
   end;
+  max = record
+    cod_auto: integer;
+    km: real;
+  end; 
 procedure calcular_max(var max1, max2: viajes; v: viajes);
 begin
-  if (v.kilo > max1.kilo) then
+  if (v.km > max1.km) then
   begin
     max2:= max1;
     max1:= v;
   end
   else
-    if (v.kilo > max2.kilo) then max2:= v;
+    if (v.km > max2.km) 
+      then max2:= v;
 end;
 procedure insertar_ordenado(var ls: lista_v; v: viajes);
 var
@@ -57,17 +62,17 @@ begin
 end;
 procedure recorrer_lista(ls: lista_v; var nue_ls: lista_v);
 var
-  actual, max1, max2: viajes;
+  actual, max1, max2: max;
 begin
-  max1.kilo:= -1;
+  max1.km:= -1;
   while (ls <> Nil) do
   begin
     actual.cod_auto:= ls^.elem.cod_auto;
-    actual.kilo:= 0;
+    actual.km:= 0;
     while (ls <> Nil) and (actual.cod_auto = ls^.elem.cod_auto) do
     begin
-      actual.kilo:= actual.kilo + ls^.elem.kilo;
-      if (ls^.elem.kilo > condicion) then
+      actual.km:= actual.km + ls^.elem.km;
+      if (ls^.elem.km > condicion) then
         insertar_ordenado(nue_ls, ls^.elem);
       ls:= ls^.sig;
     end;
