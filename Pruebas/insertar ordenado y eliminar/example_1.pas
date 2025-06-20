@@ -19,14 +19,12 @@ begin
     act:= act^.sig;
   end;
 
-  if (act = ant) then begin
-    nuevo^.sig:= ls;
+  if (act = ant) then
     ls:= nuevo;
-  end
-  else begin
+  else
     ant^.sig:= nuevo;
-    nuevo^.sig:= act;
-  end;
+  nuevo^.sig:= act;
+
 end;
 procedure generar_ls(var ls: lista);
 var

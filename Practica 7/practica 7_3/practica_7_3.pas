@@ -53,9 +53,7 @@ begin
     act:= act^.sig;
   end;
   if (act = ant) then
-  begin
     ls:= nue;
-  end
   else
     ant^.sig:= nue;
   nue^.sig:= act
