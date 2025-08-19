@@ -20,7 +20,7 @@ begin
   end;
 
   if (act = ant) then
-    ls:= nuevo;
+    ls:= nuevo
   else
     ant^.sig:= nuevo;
   nuevo^.sig:= act;
@@ -43,6 +43,7 @@ begin
     ls:= ls^.sig;
   end;
 end;
+
 procedure eliminar(var ls: lista; num: integer);
 var
   ant, act: lista;
@@ -63,6 +64,7 @@ begin
     dispose(act);
   end;
 end;
+
 function existe(ls: lista; num: integer):boolean;
 var 
   aux: boolean;
