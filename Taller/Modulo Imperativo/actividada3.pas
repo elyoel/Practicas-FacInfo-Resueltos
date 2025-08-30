@@ -100,7 +100,12 @@ begin
         v[ i ] := item;
 	end;
 end;
+procedure imprmir(v_maximos);
+begin
+	WriteLn('código de película con mayor puntaje y el código de película con menor puntaje')
+	WriteLn(vector_max[1].cod, ' ', vector_max[8].cod);
 
+end;
 var
 	vector_peliculas: v_peliculas;
 	vector_max: v_maximos;
@@ -109,5 +114,4 @@ begin
 	generar_vector(vector_max, vector_peliculas);
 	ordenar_vector(vector_max);
 
-	WriteLn(vector_max[1].cod, ' ', vector_max[8].cod);
 end.
