@@ -102,7 +102,7 @@ begin
 end;
 procedure imprmir(v_maximos);
 begin
-	WriteLn('código de película con mayor puntaje y el código de película con menor puntaje')
+	WriteLn('código de película con mayor puntaje y el código de película con menor puntaje');
 	WriteLn(vector_max[1].cod, ' ', vector_max[8].cod);
 
 end;
