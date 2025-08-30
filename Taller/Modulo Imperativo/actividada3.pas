@@ -1,6 +1,6 @@
 program actividad3;
 const
-	dimF = 8
+	dimF = 8;
 type
 	generos = 1..dimF;
 	
@@ -15,75 +15,99 @@ type
 		elem: pelicula;
 		sig: lista;
 	end;
-	v_generos = array[generos] of Integer;
+	v_peliculas = array[generos] of lista;
+	v_maximos = array[generos] of pelicula;
 
-
-procedore insetar(var ls: lista; p: pelicula);
-var
-	ant, act, nuevo: lista;
+procedure insertar_atras(var pri, ult: lista; elem: pelicula);
+var nue : lista;
 begin
-	new(nuevo)
-	nuevo^.elem:= p;
-	ant:= ls; act:= ls;
-	
-	while (act <> ls) AND (p.cod > act^.elem.cod) do  begin
-		ant:= act;
-		act:= act^.sig;
-	end;
-	If (act = ant) then
-		ls:= nue;
-	else 
-		ant^.sig = nuevo;
-	nue^.sig:= act
+new (nue);
+	nue^.elem:= elem;
+	nue^.sig := Nil;
+	if (pri <> Nil) then
+		ult^.sig := nue
+	else
+		pri := nue;
+	ult := nue;
+
 end;
-procedure cargar_lista(var ls: lista)
+procedure cargar_lista(var v: v_peliculas);
+	procedure inicializar_vector(var v: v_peliculas);
+	var i: generos;
+	begin
+		for i:= 1 to dimF do
+			v[i] := Nil;
+	end;
 	procedure leer_peli(var p: pelicula);
 	begin
+    WriteLn('Ingrese Codigo');
 		readln(p.cod);
-		while (p.cod <> -1) do begin
+		If (p.cod <> -1) then begin
+      WriteLn('Ingrese Genero');
 			read(p.cod_gen);
+      WriteLn('Ingrese Puntaje');
 			read(p.puntaje);
+      
 		end;
 	end;
-var p: pelicula;
+
+var 
+	p: pelicula;
+	v_ult: v_peliculas;
 begin
+	inicializar_vector(v_ult);
+  inicializar_vector(v);
 	leer_peli(p);
 	while (p.cod <> -1) do begin
-		insertar(ls, p);
+		insertar_atras(v[p.cod], v_ult[p.cod], p);
 		leer_peli(p);
 	end;
 end;
 
-procedure generar_vector(var v: v_generos; ls: lista);
-var
-	actual: pelicula;
-	max: Real;
-begin
-	while (ls <> Nil) do begin
-		actual:= ls^.elem;
-		max:= ls^.elem.puntaje;
-		while (ls <> Nil) AND (actual.cod = ls^.elem.cod) do begin
-			If (ls^.elem.puntaje > max) then
-				max:= ls^.elem.puntaje;
+procedure generar_vector(var v_max: v_maximos; v_peli: v_peliculas);
+	procedure buscarCodMax(ls: lista; var max: pelicula);
+	begin
+		max.puntaje:= -1;
+		while (ls <> Nil) do begin
+			if  (ls^.elem.puntaje > max.puntaje) then begin
+				max:= ls^.elem;
+			end;
 			ls:= ls^.sig;
 		end;
-		v[actual.cod]:= max;
+	end;
+var
+	i:  integer;
+	max: pelicula;
+begin
+	for  i:=  1 to dimF do begin
+		buscarCodMax(v_peli[i], max);
+		v_max[i]:= max;
 	end;
 end;
 
-procedure ordenar_vector(var v: v_generos);
+procedure ordenar_vector(var v: v_maximos);
 var
 	i, j, pos: generos;
+	item: pelicula;
 begin
 	for i:= 1 to (dimF - 1) do begin
-		pos:= i
-		for j:= (i+1) to dimF do begin
+		pos:= i;
+		for j:= (i+1) to dimF do
+			if (v[j].puntaje < v[pos].puntaje) then pos:= j; 
 		
-		end;
+		item := v[pos];
+        v[pos] := v[i];   
+        v[ i ] := item;
 	end;
 end;
 
 var
+	vector_peliculas: v_peliculas;
+	vector_max: v_maximos;
 begin
-end.
+	cargar_lista(vector_peliculas);
+	generar_vector(vector_max, vector_peliculas);
+	ordenar_vector(vector_max);
 
+	WriteLn(vector_max[1].cod, ' ', vector_max[8].cod);
+end.
