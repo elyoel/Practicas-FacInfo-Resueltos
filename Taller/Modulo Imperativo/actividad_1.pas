@@ -127,6 +127,10 @@ Begin
   posInferior := BuscarPosicion (v, dimL, valorInferior);
   If (posInferior <> 0) Then
     Begin
+      {Hay una mejor manera es la que se ocurrio en el momento.
+       la idea era completarlo con las variables 'i' y 'salto' utlizando un for
+       lo que se me ocurrio en le momento fue utilizar un while y modificar posSuperior sumando 1
+       modificando la idea original}
       posSuperior := BuscarPosicionDesde (v, dimL, posInferior, valorSuperior) + 1;
       While (posSuperior <= dimL) do 
         Begin
