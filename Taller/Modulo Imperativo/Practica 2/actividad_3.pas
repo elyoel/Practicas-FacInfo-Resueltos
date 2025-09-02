@@ -2,15 +2,13 @@ program actividad_2;
 const
   max = 1550; min = 300;
   dimF = 20;
-  
 type
   vector = array[1..dimF] Of Integer;
-
+procedure cargarRecursivo(var v: vector; var dimL: integer);
 function numRandom():integer;
 begin
     numRandom:= min + Random(((max - min) + 1));
 end;
-procedure cargarRecursivo(var v: vector; var dimL: integer);
 begin
   If (dimL < dimF) then
   begin
@@ -64,7 +62,7 @@ begin
   ordenar(v, dimL);
   
   WriteLn('Ingrese elemento a buscar entre 300 y 1550 : '); Read(elem);
-  busquedaDicotomica(v, 1, dimL, 1300, pos);
+  busquedaDicotomica(v, 1, dimL, elem, pos);
   If (pos = -1)then
     WriteLn('Elemento no encontrado')
   Else  WriteLn('Se encontro el elemento:', elem, ' en la posicion: ', pos);
