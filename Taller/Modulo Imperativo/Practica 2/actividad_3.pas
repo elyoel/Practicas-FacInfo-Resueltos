@@ -6,7 +6,6 @@ const
 type
   vector = array[1..dimF] Of Integer;
 
-
 function numRandom():integer;
 begin
     numRandom:= min + Random(((max - min) + 1));
