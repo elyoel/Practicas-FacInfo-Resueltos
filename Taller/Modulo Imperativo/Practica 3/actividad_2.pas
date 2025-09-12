@@ -73,7 +73,7 @@ procedure generarArboles(var a1: arbol; var a2: arbol2; var a3: arbol3);
 		else If (v.cod < a1^dato.cod) then insertar(a1^.HI, v)
 		else insertarVenta1(a1^.HD, v);
 	end;
-	procedure insertarVenta(a2: arbol2, v: venta);
+	procedure insertarVenta1(a2: arbol2, v: venta);
 	var vt: ventasTotales;
 	begin
 		If (a2 := Nil) then

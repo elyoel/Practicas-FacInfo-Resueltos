@@ -17,10 +17,13 @@ procedure cargarVector(var v: vector; var dimL: oficinas);
 	begin
 		Write('codigo oficina')
 		Readln(o.cod);
-		Write('Dni del propietario')
-		Readln(o.dni);
-		Write('Valor de la expensa')
-		Readln(o.valor);
+		If  (o.cod <> 0) then
+		begin
+			Write('Dni del propietario')
+			Readln(o.dni);
+			Write('Valor de la expensa')
+			Readln(o.valor);
+		end;
 	end;
 var i: oficinas;
 	o: oficina;
