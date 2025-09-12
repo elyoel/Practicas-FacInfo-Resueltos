@@ -32,7 +32,7 @@ procedure cargarAboles(var a1, a2: arbol);
 		WriteLn('Ingrese modelo');
 		ReadLn(o.modelo);
 	end;
-	procedure insertarAbrolPatente(var a: arbol, dato: auto);
+	procedure insertarArbolPatente(var a: arbol, dato: auto);
 	var
 	begin
 		If (a = Nil) then
@@ -44,7 +44,7 @@ procedure cargarAboles(var a1, a2: arbol);
 		else If (dato.patente >= a^.dato.patente) then insertarAbrol(a^.HD, dato)
 			else insertarAbrol(a^.HI, dato);
 	end;
-	procedure insertarAbrolMarca(var a: arbol, dato: auto);
+	procedure insertarArbolMarca(var a: arbol, dato: auto);
 	var
 	begin
 		If (a = Nil) then
