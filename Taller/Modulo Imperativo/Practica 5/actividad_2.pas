@@ -195,7 +195,7 @@ end;
 procedure buscarPatente2(a: arbol2; p: string);
 begin
 {f) Invoque a un módulo que reciba el árbol generado en a) ii y una patente y devuelva el
-color del auto con dicha patente. INDEFINIDO}
+color del auto con dicha patente. INEFICIENTE}
 end;
 var
 	arbolPatente: arbol;
