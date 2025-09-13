@@ -132,6 +132,7 @@ var
     int1, int2: integer;
 begin
     Randomize;
+    arbolAutores:= Nil;
     generarEstructuras(arbolAutores, vectorGeneros);
     ordenarYretornar(vectorGeneros, vec_gen);
 
