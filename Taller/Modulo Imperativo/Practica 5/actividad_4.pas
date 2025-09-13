@@ -109,7 +109,7 @@ procedure ordenarYretornar(var v: vector; v_nombres: v_gen);
 begin
     ordenarInsercion(v);
     WriteLn('nombre de género con mayor cantidad cantidad de libros: ');
-    WriteLn(v_nombres[v[maxGen].cod_gen]);
+    WriteLn(v_nombres[v[1].cod_gen]);
     
 end;
 
