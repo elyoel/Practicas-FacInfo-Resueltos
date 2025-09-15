@@ -1,4 +1,4 @@
-program parcialMercadoLibre;
+program parcialCorreoArgentino;
 type
     paquete = record
         codEnvio: integer;
