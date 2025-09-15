@@ -68,7 +68,7 @@ begin
     begin
         dato:= v[i];
         j:= i - 1;
-        while (j > 0) AND (v[j].cod > dato.cod) do
+        while (j > 0) AND (dato.cod < v[j].cod) do
         begin
             v[j+1]:= v[j];
             j:= j - 1;

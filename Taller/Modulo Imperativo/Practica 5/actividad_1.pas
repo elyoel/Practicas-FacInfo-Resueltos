@@ -68,7 +68,7 @@ function buscarCod(v: vector; dimF, cod: oficinas):oficinas;
 				else busquedaDicotomica(v, medio+1, fin, valor, pos);
 		end;
 	end;
-var pos
+var pos;
 begin
 	pos:= 0;
 	busquedaDicotomica(v, 1, dimF, cod, pos);
@@ -93,10 +93,7 @@ begin
 	ReadLn(codigo);
 	pos:= buscarCod(vectorOficinas, dimF, codigo);
 	If (pos <> 0) then
-	begin
-		Writeln('El dni del dueño del codigo de oficina ingresada es: ')
-		writeln(v[pos]);
-	end
+		Writeln('El dni del dueño del codigo de oficina ingresada es: ', v[pos])
 	else
 		Writeln('No se encontro la oficina con ese codigo');
 	
