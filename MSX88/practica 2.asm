@@ -1,0 +1,53 @@
+PA equ 30h
+PB equ 31h
+CA equ 32h
+CB equ 33h
+ORG 1000h
+  MSJ1 db "Llave prendida "
+  MSJ2 db "Llave apagada"
+  XD db ?
+
+ORG 3000h
+CONFIG: 
+  MOV AL, 0FFh
+  OUT CA, AL
+  MOV AL, 0h
+  OUT CB, AL
+RET
+
+ORG 3100h
+PUTS1:
+  PUSH AX
+  MOV BX, offset MSJ1
+  MOV AL, Offset MSJ2 - offset MSJ1
+  INT 7
+  POP AX
+RET
+PUTS2:
+  PUSH AX
+  MOV BX, offset MSJ2
+  MOV AL, offset XD - offset MSJ2
+  INT 7
+  POP AX
+RET
+ORG 3200h
+VERIFICAR:
+  
+  IN AL, PA
+  TEST AL, 80h
+  JNZ SALTO
+  CALL PUTS2
+  JMP FIN
+  SALTO:
+  CALL PUTS1
+FIN: RET
+
+ORG 2000h
+  CALL CONFIG
+REPEAT:
+  IN AL, PA
+  OUT PB, AL
+  CALL VERIFICAR
+  JMP REPEAT
+INT 0
+END
