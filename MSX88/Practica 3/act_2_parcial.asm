@@ -1,0 +1,44 @@
+ID_F10 equ 15
+INT0 equ 24h
+PB equ 31h
+CB equ 33h
+EOI equ 20h
+IMR equ 21h
+ORG 60
+  dw RUT_F10
+
+ORG 3000h
+RUT_F10:
+  PUSH AX
+  IN AL, PB
+  CMP AL, 0
+  JZ JUMP
+  MOV AL, 0
+  OUT PB, AL
+  JMP FIN
+  
+JUMP:
+  MOV AL, 0FFh
+  OUT PB, AL
+  
+FIN: MOV AL, EOI
+  OUT EOI, AL
+  POP AX
+IRET
+
+ORG 2000h
+  CLI
+  MOV AL, 0FEh
+  OUT IMR, AL
+  MOV AL, ID_F10
+  OUT INT0, AL
+
+  MOV AL, 0
+  OUT CB, AL
+  MOV AL, 0
+  OUT PB, AL
+  STI
+
+LOOP: JMP LOOP
+  INT 0
+  END
