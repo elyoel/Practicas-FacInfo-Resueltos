@@ -34,32 +34,28 @@ public class Actividad_4 {
         System.out.println("Ingrese  nombre: ");
         String nom = GeneradorAleatorio.generarString(3).toUpperCase();
         int i = 0, j, dia;
-        boolean  hayTurno;
         while (!nom.equals("ZZZ") && DimL < DimF){
             System.out.println("Ingrese  edad: ");
             edad = GeneradorAleatorio.generarInt(99);
             System.out.println("Ingrese  dni: ");
             dni = GeneradorAleatorio.generarInt(99999999)+10000000;
-            hayTurno = false;
-            while (!hayTurno){
-                j=0;
-                System.out.println("Ingrese  dia: ");
-                dia = GeneradorAleatorio.generarInt(DF);
-                while(j < DC && casting[dia][j] != null){
-                    j++;
-                }
-                if (j >= DC){
-                    System.out.println("Turnos llenos en el dia " + (dia+1) + " solicitidado, ingrese otro dia: ");
-                }else{
-                    casting[dia][j] = new Persona(nom, dni, edad);
-                    DimL++;
-                    hayTurno = true;
-                }
-            }     
+            j=0;
+            System.out.println("Ingrese  dia: ");
+            dia = GeneradorAleatorio.generarInt(DF);
+            while(j < DC && casting[dia][j] != null){
+                j++;
+            }
+            if (j >= DC){
+                System.out.println("Turnos llenos en el dia " + (dia+1) + " solicitidado, ingrese otro dia: ");
+            }else{
+                casting[dia][j] = new Persona(nom, dni, edad);
+                DimL++;
+            }
             System.out.println("Ingrese  nombre: ");
             nom = GeneradorAleatorio.generarString(3).toUpperCase();
         }
         System.out.println();
+        
         int cant;
         for (i = 0; i < DF; i++){
             cant = 0;
