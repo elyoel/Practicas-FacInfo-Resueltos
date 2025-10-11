@@ -70,7 +70,7 @@ public class Estacionamiento {
     public int cantAutosPlaza(int unaPlaza){
         int cant = 0;
         for (int i = 0; i< this.N; i++){
-            if (!(this.secciones[i][unaPlaza-1] == null)){
+            if (this.secciones[i][unaPlaza-1] != null){
                 cant++;
             }
         }
