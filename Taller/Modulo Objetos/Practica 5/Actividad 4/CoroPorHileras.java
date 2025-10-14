@@ -13,6 +13,8 @@ public class CoroPorHileras extends Coro{
     private Corista coristas[][];
     private int dimL;
     private final int DF,  DC;
+
+
     public CoroPorHileras(String nombre, Director director, int hileras, int cantIntegrantes){
         super(nombre, director);
         this.DF = hileras;
