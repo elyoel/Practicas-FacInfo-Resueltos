@@ -1,0 +1,97 @@
+programa act3
+procesos
+  proceso recogerPapeles(ES papel: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papel:= papel + 1
+  fin
+  proceso recogerFlores(ES flor: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flor:= flor + 1
+  fin
+  proceso recogerFlorYPapel(ES FyP: numero)
+  comenzar
+    recogerFlores(FyP)
+    recogerPapeles(FyP)
+  fin
+  proceso recolectar(ES FyP: numero)
+  variables
+    IniCa, IniAv, Ca, Av: numero
+  comenzar
+    FyP:= 0
+    IniCa:= PosCa
+    IniAv:= PosAv
+    Random(Av, 25, 75)
+    Random(Ca, 25, 75)
+    Pos(Av, Ca)
+    recogerFlorYPapel(FyP)
+    Pos(IniAv, IniCa)
+  fin
+areas
+  ciudad: AreaC (1, 1, 100, 1)
+  recoleccion: AreaPC (25, 25, 75, 75)
+robots
+  robot robot1 
+  variables
+    miId, FyP: numero
+    permiso: boolean
+  comenzar
+    RecibirMensaje(miId, Fiscal)
+    permiso:= V
+    mientras (permiso)
+      RecibirMensaje(permiso, Fiscal)
+      si (permiso)
+        recolectar(FyP)
+        EnviarMensaje(miId, Fiscal)
+        EnviarMensaje(FyP, Fiscal)
+  fin
+  robot fiscalizador
+  variables
+    aux: numero
+  comenzar
+    aux:= 0
+    EnviarMensaje(1, R1)
+    EnviarMensaje(2, R2)
+    EnviarMensaje(3, R3)
+    EnviarMensaje(4, R4)
+    repetir 10
+      Random(aux, 1, 4)
+      si (aux = 1)
+        EnviarMensaje(V, R1)
+      sino
+        si (aux = 2)
+          EnviarMensaje(V, R2)
+        sino
+          si (aux = 3)
+            EnviarMensaje(V, R3)
+          sino
+            EnviarMensaje(V, R4)
+    EnviarMensaje(F, R1)
+    EnviarMensaje(F, R2)
+    EnviarMensaje(F, R3)
+    EnviarMensaje(F, R4)
+            
+  fin 
+variables
+  R1, R2, R3, R4: robot1
+  Fiscal: fiscalizador
+comenzar
+  AsignarArea(R1, ciudad)
+  AsignarArea(R2, ciudad)
+  AsignarArea(R3, ciudad)
+  AsignarArea(R4, ciudad)
+  AsignarArea(Fiscal, ciudad)
+  AsignarArea(R1, recoleccion)
+  AsignarArea(R2, recoleccion)
+  AsignarArea(R3, recoleccion)
+  AsignarArea(R4, recoleccion)
+  
+  Iniciar(R1, 25,1)
+  Iniciar(R2, 30,1)
+  Iniciar(R3, 35,1)
+  Iniciar(R4, 40,1)
+  Iniciar(Fiscal, 1,1)
+fin

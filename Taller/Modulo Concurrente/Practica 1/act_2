@@ -1,0 +1,69 @@
+programa act2
+procesos
+  proceso recogerFlores(ES flor: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flor := flor + 1
+  fin
+  proceso recorrerLado(ES flor: numero;)
+  comenzar
+    repetir 20
+      recogerFlores(flor)
+      mover
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    flor: numero
+  comenzar
+    flor:= 0
+    recorrerLado(flor)
+  fin
+  robot robot2
+  variables
+    flor: numero
+  comenzar
+    flor:= 0
+    derecha
+    recorrerLado(flor)
+    Informar(flor)
+  fin
+  robot robot3
+  variables
+    flor: numero
+  comenzar
+    flor:= 0
+    repetir 2
+      derecha
+    recorrerLado(flor)
+    Informar(flor)
+  fin
+  robot robot4
+  variables
+    flor: numero
+  comenzar
+    flor:= 0
+    repetir 3
+      derecha
+    recorrerLado(flor)
+    Informar(flor)
+  fin
+variables
+  {mejorar con swicht}
+  R1: robot1
+  R2: robot2
+  R3: robot3
+  R4: robot4
+comenzar
+  AsignarArea(R1, ciudad)
+  AsignarArea(R2, ciudad)
+  AsignarArea(R3, ciudad)
+  AsignarArea(R4, ciudad)
+  Iniciar(R1, 10,10)
+  Iniciar(R2, 10,30)
+  Iniciar(R3, 30,30)
+  Iniciar(R4, 30,10)
+fin

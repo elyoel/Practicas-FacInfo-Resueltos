@@ -1,0 +1,82 @@
+programa act3
+procesos
+  proceso recogerPapeles(ES papel: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papel:= papel + 1
+  fin
+  proceso recogerFlores(ES flor: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flor:= flor + 1
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot A
+  variables
+    papel: numero
+  comenzar
+    papel:= 0
+    derecha
+    repetir 2
+      si (PosAv = 10)
+        Pos(21, PosCa)
+        RecibirMensaje(papel, A2)
+      si (PosAv = 20)
+        Pos(31, PosCa)
+      si (PosAv = 11) | (PosAv = 31)
+        RecibirMensaje(papel, A1)
+      repetir 9
+        recogerPapeles(papel)
+        mover
+      recogerPapeles(papel)
+      si (PosAv = 40)
+        Informar(papel)
+      sino
+        si (PosAv = 20)
+          EnviarMensaje(papel, A1)
+        sino
+          EnviarMensaje(papel, A2)
+  fin
+  robot B
+  variables
+    flor: numero
+  comenzar
+    flor:= 0
+    derecha
+    repetir 2
+      si (PosAv = 10)
+        Pos(21, PosCa)
+        RecibirMensaje(flor, B2)
+      si (PosAv = 20)
+        Pos(31, PosCa)
+      si (PosAv = 11) | (PosAv = 31)
+        RecibirMensaje(flor, B1)
+      repetir 9
+        recogerPapeles(flor)
+        mover
+      recogerPapeles(flor)
+      si (PosAv = 40)
+        Informar(flor)
+      sino
+        si (PosAv = 20)
+          EnviarMensaje(flor, B1)
+        sino
+          EnviarMensaje(flor, B2)
+  fin 
+variables
+  A1, A2: A 
+  B1, B2: B
+comenzar
+  AsignarArea(A1, ciudad)
+  AsignarArea(A2, ciudad)
+  AsignarArea(B1, ciudad)
+  AsignarArea(B2, ciudad)
+  Iniciar(A1, 1,1)
+  Iniciar(A2, 11,1)
+  Iniciar(B1, 1,5)
+  Iniciar(B2, 11,5)
+fin

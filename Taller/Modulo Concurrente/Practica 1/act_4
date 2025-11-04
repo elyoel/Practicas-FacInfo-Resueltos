@@ -1,0 +1,71 @@
+programa act4
+procesos 
+  proceso recogerPapeles
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+  fin
+  proceso recogerFlores
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+  fin
+  proceso limpiarAvenidaFlor
+  comenzar
+    repetir 99
+      recogerFlores
+      mover
+    recogerFlores
+  fin
+  proceso limpiarAvenidaPapel
+  comenzar
+    repetir 99
+      recogerPapeles
+      mover
+    recogerPapeles
+  fin
+  proceso limpiarAreaPapel
+  comenzar
+    repetir 24
+      limpiarAvenidaPapel
+      Pos(PosAv + 1, 1)
+    limpiarAvenidaPapel
+  fin
+  
+  proceso limpiarAreaFlor
+  comenzar
+    repetir 24
+      limpiarAvenidaFlor
+      Pos(PosAv + 1, 1)
+    limpiarAvenidaFlor
+  fin
+areas
+  area1: AreaP (1,1,25,100)
+  area2: AreaP (26,1,50,100)
+  area3: AreaP (51,1,75,100)
+  area4: AreaP (76,1,100,100)
+robots
+  robot limpiadorImpar
+  comenzar
+    limpiarAreaFlor
+    Pos(76, 1)
+    limpiarAreaFlor
+  fin
+  robot limpiadorPar
+  comenzar
+    limpiarAreaPapel
+    Pos(51, 1)
+    limpiarAreaPapel
+    
+  fin
+variables
+  R1: limpiadorImpar
+  R2: limpiadorPar
+comenzar
+  AsignarArea(R1, area2)
+  AsignarArea(R1, area4)
+  AsignarArea(R2, area1)
+  AsignarArea(R2, area3)
+  Iniciar(R1, 26, 1)
+  Iniciar(R2, 1, 1)
+fin

@@ -1,0 +1,49 @@
+programa ejemplo
+procesos
+  proceso depositarFlores(E cant: numero)
+  comenzar
+    repetir cant
+      depositarFlor
+  fin
+  proceso recogerFlores(ES flor: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flor := flor + 1
+  fin
+  proceso contar(ES flor: numero; ES sinFlor: numero)
+  comenzar
+    si ~(HayFlorEnLaEsquina)
+      sinFlor:= sinFlor + 1
+    sino
+      recogerFlores(flor)
+  fin
+  proceso recorrerAvenida(ES flor: numero; ES sinFlor: numero)
+  comenzar
+    repetir 99
+      contar(flor, sinFlor)
+      mover
+    contar(flor, sinFlor)
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    conFlor, sinFlor: numero
+  comenzar
+    recorrerAvenida(conFlor, sinFlor)
+    depositarFlores(conFlor)
+    Informar("Esquinas con flor ", conFlor)
+    Informar("Esquinas sin flor ", sinFlor)
+  fin
+variables
+  R1, R2, R3: robot1
+comenzar
+  AsignarArea(R1, ciudad)
+  AsignarArea(R2, ciudad)
+  AsignarArea(R3, ciudad)
+  Iniciar(R1, 1,1)
+  Iniciar(R2, 3,1)
+  Iniciar(R3, 5,1)
+fin
