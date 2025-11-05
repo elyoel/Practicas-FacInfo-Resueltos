@@ -55,19 +55,18 @@ robots
   fin
   robot Fiscalizador
   variables
-    id1: numero
+    primero, segundo: numero
   comenzar  
     EnviarMensaje(1, R1)
     EnviarMensaje(2, R2)
-    repetir 2
-      RecibirMensaje(id1, *)
-      {Para que informe el fiscal que robot termino primero es poner informar antes de enviar mensaje}
-      si (id1 = 1)
-        {Informar("Robot uno gano R", id1)}
-        EnviarMensaje(20, R1)
-      sino
-        {Informar("Robot dos gano R", id1)}
-        EnviarMensaje(21, R2)  
+    RecibirMensaje(primero, *)
+    RecibirMensaje(segundo, *)
+    si(primero = 1)
+      EnviarMensaje(20, R1)
+      EnviarMensaje(21, R2)
+    sino
+      EnviarMensaje(21, R1)
+      EnviarMensaje(20, R2)
   fin
 variables
   R1: RecolectorPapel
