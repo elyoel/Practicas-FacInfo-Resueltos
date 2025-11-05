@@ -1,0 +1,120 @@
+programa act3
+procesos
+  proceso recogerPapeles(ES papel: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papel:= papel + 1
+  fin
+  proceso recogerFlores(ES flor: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flor:= flor + 1
+  fin
+  proceso dir(E cant: numero)
+  comenzar
+    repetir cant
+      derecha
+  fin
+  proceso escalon(E BxA: numero; ES flor: numero)
+  comenzar
+    repetir BxA
+      mover
+    recogerFlores(flor)
+    derecha
+    repetir BxA
+      mover
+    dir(3)
+  fin
+  proceso escalonInvertido(E BxA: numero; ES papel: numero)
+  comenzar
+    repetir BxA
+      mover
+    recogerPapeles(papel)
+    dir(3)
+    repetir BxA
+      mover
+    derecha
+  fin
+areas
+  recoleccion: AreaPC (2, 2, 10, 10)
+  espera: AreaC (1, 1, 5,  1)
+robots
+  robot Recolector
+  variables
+    Av, Ca, IniAv, IniCa, flor: numero
+    hayFlor: boolean
+  comenzar
+    RecibirMensaje(Av, R5)
+    RecibirMensaje(Ca, R5)
+    flor:= 0
+    IniAv:= PosAv
+    IniCa:= PosCa
+    hayFlor:= V
+    mientras (hayFlor)
+      BloquearEsquina(Av, Ca)
+      Pos(Av, Ca)
+      hayFlor:= HayFlorEnLaEsquina
+      si (hayFlor)
+        tomarFlor
+        flor:= flor + 1
+      hayFlor:= HayFlorEnLaEsquina
+      Pos(IniAv, IniCa)
+      LiberarEsquina(Av, Ca)
+    EnviarMensaje(flor, R5)
+  fin
+  robot Jefe
+  variables
+    flor1, flor2, flor3, flor4: numero
+    Av, Ca: numero
+    maxFlor, maxId: numero
+  comenzar
+    Random(Av, 2, 10)
+    Random(Ca, 2, 10)  
+    EnviarMensaje(Av, R1)
+    EnviarMensaje(Ca, R1)
+    EnviarMensaje(Av, R2)
+    EnviarMensaje(Ca, R2)
+    EnviarMensaje(Av, R3)
+    EnviarMensaje(Ca, R3)
+    EnviarMensaje(Av, R4)
+    EnviarMensaje(Ca, R4)
+    RecibirMensaje(flor1, R1)
+    RecibirMensaje(flor2, R2)
+    RecibirMensaje(flor3, R3)
+    RecibirMensaje(flor4, R4)
+    si (flor1 >= flor2)
+      maxFlor:= flor1
+      maxId:= 1
+    sino
+      maxFlor:= flor2
+      maxId:= 2
+    si (flor3 > maxFlor)
+      maxFlor:= flor3
+      maxId:= 3
+    si (flor4 > maxFlor)
+      maxFlor:= flor4
+      maxId:= 4
+    Informar("Robor recolecto mas flores R", maxId)
+  fin
+variables
+  R1, R2, R3, R4: Recolector
+  R5: Jefe
+comenzar
+  AsignarArea(R1, espera)
+  AsignarArea(R2, espera)
+  AsignarArea(R3, espera)
+  AsignarArea(R4, espera)
+  AsignarArea(R5, espera)
+  AsignarArea(R1, recoleccion)
+  AsignarArea(R2, recoleccion)
+  AsignarArea(R3, recoleccion)
+  AsignarArea(R4, recoleccion)
+  AsignarArea(R5, recoleccion)
+  Iniciar(R1, 2, 1)
+  Iniciar(R2, 3, 1)
+  Iniciar(R3, 4, 1)
+  Iniciar(R4, 5, 1)
+  Iniciar(R5, 1, 1)
+fin

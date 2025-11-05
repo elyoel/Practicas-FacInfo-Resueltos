@@ -1,0 +1,106 @@
+programa act3
+procesos
+  proceso depositarPapeles
+  comenzar
+    mientras (HayPapelEnLaBolsa)
+      depositarPapel
+  fin
+  proceso depositarFlores
+  comenzar
+    mientras (HayFlorEnLaBolsa)
+      depositarFlor
+  fin
+  proceso recogerPapeles
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+  fin
+  proceso recogerFlores
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+  fin
+  proceso recolectarFlores
+  variables
+    IniCa, IniAv, Ca, Av: numero
+  comenzar
+    IniCa:= PosCa
+    IniAv:= PosAv
+    Random(Av, 1, 5)
+    Random(Ca, 1, 10)
+    BloquearEsquina(Av, Ca)
+    Pos(Av, Ca)
+    recogerFlores
+    Pos(IniAv, IniCa)
+    LiberarEsquina(Av, Ca)
+  fin
+  proceso recolectarPapeles
+  variables
+    IniCa, IniAv, Ca, Av: numero
+  comenzar
+    IniCa:= PosCa
+    IniAv:= PosAv
+    Random(Av, 6 , 5)
+    Random(Ca, 1, 10)
+    BloquearEsquina(Av, Ca)
+    Pos(Av, Ca)
+    recogerPapeles
+    Pos(IniAv, IniCa)
+    LiberarEsquina(Av, Ca)
+  fin
+areas
+  areaFlores: AreaPC (1, 1, 5, 10)
+  areaPapeles: AreaPC (6, 1, 10, 9)
+  inicioPapeleros: AreaPC (8, 10, 9, 10)
+  inicioFloreros: AreaPC (6, 10, 7, 10)
+  deposito: AreaC (10, 10, 10, 10)
+robots
+  robot Floreros
+  variables
+    iniAv, iniCa: numero
+  comenzar
+    iniAv:= PosAv
+    iniCa:= PosCa
+    repetir 5
+      recolectarFlores
+    BloquearEsquina(10, 10)
+    Pos(10, 10)
+    depositarFlores
+    Pos(iniAv, iniCa)
+    LiberarEsquina(10, 10)
+  fin
+  robot Papeleros
+  variables
+    iniAv, iniCa: numero
+  comenzar
+    iniAv:= PosAv
+    iniCa:= PosCa
+    repetir 5
+      recolectarPapeles
+    BloquearEsquina(10, 10)
+    Pos(10, 10)
+    depositarPapeles
+    Pos(iniAv, iniCa)
+    LiberarEsquina(10, 10)  
+  fin
+variables
+  R1, R2: Floreros
+  R3, R4: Papeleros
+comenzar
+  AsignarArea(R1, areaFlores)
+  AsignarArea(R2, areaFlores)
+  AsignarArea(R3, areaPapeles)
+  AsignarArea(R4, areaPapeles)
+  AsignarArea(R1, inicioFloreros)
+  AsignarArea(R2, inicioFloreros)
+  AsignarArea(R3, inicioPapeleros)
+  AsignarArea(R4, inicioPapeleros)
+  AsignarArea(R1, deposito)
+  AsignarArea(R2, deposito)
+  AsignarArea(R3, deposito)
+  AsignarArea(R4, deposito)
+  Iniciar(R1, 6, 10)
+  Iniciar(R2, 7, 10)
+  Iniciar(R3, 8, 10)
+  Iniciar(R4, 9, 10)
+fin

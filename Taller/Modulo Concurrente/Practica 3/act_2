@@ -1,0 +1,108 @@
+programa act3
+procesos
+  proceso recogerPapeles(ES papel: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papel:= papel + 1
+  fin
+  proceso recogerFlores(ES flor: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flor:= flor + 1
+  fin
+  proceso dir(E cant: numero)
+  comenzar
+    repetir cant
+      derecha
+  fin
+  proceso escalon(E BxA: numero; ES flor: numero)
+  comenzar
+    repetir BxA
+      mover
+    recogerFlores(flor)
+    derecha
+    repetir BxA
+      mover
+    dir(3)
+  fin
+  proceso escalonInvertido(E BxA: numero; ES papel: numero)
+  comenzar
+    repetir BxA
+      mover
+    recogerPapeles(papel)
+    dir(3)
+    repetir BxA
+      mover
+    derecha
+  fin
+areas
+  ciudad: AreaC (1, 1, 100, 100)
+robots
+  robot CorredorFlor
+  variables
+    flor, BxA: numero
+  comenzar
+    flor:= 0
+    BxA:= 5
+    repetir 4
+      escalon(BxA, flor)
+      BxA:= BxA - 1
+    mover
+    recogerFlores(flor)
+    derecha
+    BloquearEsquina(16, 16)
+    EnviarMensaje(1, R3)
+    mover
+    dir(2)
+    mover
+    LiberarEsquina(16, 16)
+    repetir 4
+      BxA:= BxA + 1
+      escalon(BxA, flor)
+    Informar("Total Flor juntado ", flor)
+  fin
+  robot CorredorPapel
+  variables
+    papel, BxA: numero
+  comenzar
+    papel:= 0
+    BxA:= 5
+    repetir 4
+      escalonInvertido(BxA, papel)
+      BxA:= BxA - 1
+    mover
+    recogerPapeles(papel)
+    dir(3)
+    BloquearEsquina(16, 16)
+    EnviarMensaje(2, R3)
+    mover
+    dir(2)
+    mover
+    LiberarEsquina(16, 16)
+    repetir 4
+      BxA:= BxA + 1
+      escalonInvertido(BxA, papel)
+    Informar("Total Papel juntado ", papel)
+  fin
+  robot Jefe
+  variables
+    Id1, Id2: numero
+  comenzar
+    RecibirMensaje(Id1, *)
+    Informar("Robot llego primero a la esquina central R", Id1)
+    RecibirMensaje(Id2, *)
+  fin
+variables
+  R1: CorredorFlor
+  R2: CorredorPapel
+  R3: Jefe
+comenzar
+  AsignarArea(R1, ciudad)
+  AsignarArea(R2, ciudad)
+  AsignarArea(R3, ciudad)
+  Iniciar(R1, 1, 1)
+  Iniciar(R2, 31, 1)
+  Iniciar(R3, 16, 1)
+fin

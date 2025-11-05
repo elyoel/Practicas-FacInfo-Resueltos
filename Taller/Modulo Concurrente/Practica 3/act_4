@@ -1,0 +1,57 @@
+programa act4
+areas
+  ciudad: AreaC (1, 1, 100, 100)
+robots
+  robot Recolector
+  variables
+    miId, IniAv, IniCa: numero
+    hayFlor: boolean
+  comenzar
+    RecibirMensaje(miId, R5)
+    IniAv:= PosAv
+    IniCa:= PosCa
+    hayFlor:= V
+    mientras hayFlor
+      BloquearEsquina(10, 10)
+      Pos(10, 10)
+      hayFlor:= HayFlorEnLaEsquina
+      si hayFlor
+        tomarFlor
+        BloquearEsquina(11, 11)
+        Pos(11, 11)
+        LiberarEsquina(10, 10)
+        depositarFlor     
+        Pos(IniAv, IniCa)
+        LiberarEsquina(11, 11)
+      sino
+        Pos(IniAv, IniCa)
+        LiberarEsquina(10, 10)
+        EnviarMensaje(miId, R5)
+  fin
+  robot Coordinador
+  variables
+    ult: numero
+  comenzar  
+    EnviarMensaje(1, R1)
+    EnviarMensaje(2, R2)
+    EnviarMensaje(3, R3)
+    EnviarMensaje(4, R4)
+    repetir 4
+      RecibirMensaje(ult, *)
+    Informar("Ultimo Robot en llegar R", ult)
+  fin
+variables
+  R1, R2, R3, R4: Recolector
+  R5: Coordinador
+comenzar
+  AsignarArea(R1, ciudad)
+  AsignarArea(R2, ciudad)
+  AsignarArea(R3, ciudad)
+  AsignarArea(R4, ciudad)
+  AsignarArea(R5, ciudad)
+  Iniciar(R1, 9, 9)
+  Iniciar(R2, 9, 10)
+  Iniciar(R3, 9, 11)
+  Iniciar(R4, 9, 12)
+  Iniciar(R5, 1, 1)
+fin

@@ -1,0 +1,140 @@
+programa act3
+procesos
+  proceso recogerPapeles(ES papel: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papel:= papel + 1
+  fin
+  proceso recogerFlores(ES flor: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flor:= flor + 1
+  fin
+  proceso recogerFlorYPapel(ES FyP: numero)
+  comenzar
+    recogerFlores(FyP)
+    recogerPapeles(FyP)
+  fin
+  proceso verificarMaximo(ES max: numero; ES maxId: numero; E cont: numero; E id: numero)
+  comenzar
+    si (cont > max)
+      max:= cont
+      maxId:= id
+  fin
+  proceso enviarMensajeId(E id: numero; E valor: boolean)
+  comenzar
+    si (id = 1)
+      EnviarMensaje(valor, R1)
+    sino
+      si (id = 2)
+        EnviarMensaje(valor, R2)
+      sino
+        si (id = 3)
+          EnviarMensaje(valor, R3)
+        sino
+          EnviarMensaje(valor, R4)
+  fin
+  proceso recolectar(ES FyP: numero)
+  variables
+    IniCa, IniAv, Ca, Av: numero
+  comenzar
+    FyP:= 0
+    IniCa:= PosCa
+    IniAv:= PosAv
+    Random(Av, 25, 75)
+    Random(Ca, 25, 75)
+    Pos(Av, Ca)
+    recogerFlorYPapel(FyP)
+    Pos(IniAv, IniCa)
+  fin
+areas
+  ciudad: AreaC (1, 1, 100, 1)
+  recoleccion: AreaPC (25, 25, 75, 75)
+robots
+  robot robot1 
+  variables
+    miId, FyP: numero
+    permiso, gane: boolean
+  comenzar
+    FyP:= 0
+    RecibirMensaje(miId, Fiscal)
+    permiso:= V
+    mientras (permiso)
+      RecibirMensaje(permiso, Fiscal)
+      si (permiso)
+        recolectar(FyP)
+        EnviarMensaje(miId, Fiscal)
+        EnviarMensaje(FyP, Fiscal)
+    RecibirMensaje(gane, Fiscal)
+    si (gane)
+      Pos(50,50)
+  fin
+  robot fiscalizador
+  variables    
+    aux, maxCont, maxId: numero
+    cont1, cont2, cont3, cont4: numero
+  comenzar
+    aux:= 0
+    EnviarMensaje(1, R1)
+    EnviarMensaje(2, R2)
+    EnviarMensaje(3, R3)
+    EnviarMensaje(4, R4)
+    cont1:= 0
+    cont2:= 0
+    cont3:= 0
+    cont4:= 0
+    maxCont:= -1
+    repetir 20
+      Random(aux, 1, 4)
+      enviarMensajeId(aux, V)
+    EnviarMensaje(F, R1)
+    EnviarMensaje(F, R2)
+    EnviarMensaje(F, R3)
+    EnviarMensaje(F, R4)
+    repetir 20
+      RecibirMensaje(aux, *)
+      si (aux = 1)
+        RecibirMensaje(aux, R1)
+        cont1:= cont1 + aux
+        verificarMaximo(maxCont, maxId, cont1, 1)
+      sino
+        si (aux = 2)
+          RecibirMensaje(aux, R2)
+          cont2:= cont2 + aux
+          verificarMaximo(maxCont, maxId, cont2, 2)
+        sino
+          si (aux = 3)
+            RecibirMensaje(aux, R3)
+            cont3:= cont3 + aux
+            verificarMaximo(maxCont, maxId, cont3, 3)
+          sino
+            RecibirMensaje(aux, R4)
+            cont4:= cont4 + aux
+            verificarMaximo(maxCont, maxId, cont4, 4)
+    enviarMensajeId(maxId, V)
+    EnviarMensaje(F, R1)
+    EnviarMensaje(F, R2)
+    EnviarMensaje(F, R3)
+    EnviarMensaje(F, R4)
+  fin 
+variables
+  R1, R2, R3, R4: robot1
+  Fiscal: fiscalizador
+comenzar
+  AsignarArea(R1, ciudad)
+  AsignarArea(R2, ciudad)
+  AsignarArea(R3, ciudad)
+  AsignarArea(R4, ciudad)
+  AsignarArea(Fiscal, ciudad)
+  AsignarArea(R1, recoleccion)
+  AsignarArea(R2, recoleccion)
+  AsignarArea(R3, recoleccion)
+  AsignarArea(R4, recoleccion)
+  Iniciar(R1, 25,1)
+  Iniciar(R2, 30,1)
+  Iniciar(R3, 35,1)
+  Iniciar(R4, 40,1)
+  Iniciar(Fiscal, 1,1)
+fin
