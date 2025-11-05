@@ -1,0 +1,46 @@
+proceso recogerFlores
+comenzar
+  mientras HayFlorEnLaEsquina
+    tomarFlor
+fin
+proceso recogerFyP
+comenzar
+  recogerFlores
+  mientras HayPapelEnLaEsquina
+    tomarPapel
+fin
+
+robot RecolectorPapel
+variables
+  Ca: numero
+comenzar
+  repetir 4
+    repetir 6
+     recogerFlores
+     mover
+   derecha
+  EnviarMensaje(miId, Fiscal)
+  RecibirMensaje(Ca, Fiscal)
+  Pos(1, Ca)
+  derecha
+  mientras HayFlorEnLaBolsa                 depositarFlor
+    mover
+robot RecolectorFyP
+variables
+  Ca: numero
+  comenzar
+    repetir 4
+      repetir 6
+        recogerFlores
+        mover
+      derecha
+  EnviarMensaje(miId, Fiscal)
+                            RecibirMensaje(Ca, Fiscal)
+                              Pos(1, Ca)
+                                derecha
+                                  mientras HayFlorEnLaBolsa
+                                      depositarFlor
+                                          mover
+
+
+  
