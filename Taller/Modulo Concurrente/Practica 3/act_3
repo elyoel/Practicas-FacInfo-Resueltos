@@ -12,31 +12,6 @@ procesos
       tomarFlor
       flor:= flor + 1
   fin
-  proceso dir(E cant: numero)
-  comenzar
-    repetir cant
-      derecha
-  fin
-  proceso escalon(E BxA: numero; ES flor: numero)
-  comenzar
-    repetir BxA
-      mover
-    recogerFlores(flor)
-    derecha
-    repetir BxA
-      mover
-    dir(3)
-  fin
-  proceso escalonInvertido(E BxA: numero; ES papel: numero)
-  comenzar
-    repetir BxA
-      mover
-    recogerPapeles(papel)
-    dir(3)
-    repetir BxA
-      mover
-    derecha
-  fin
 areas
   recoleccion: AreaPC (2, 2, 10, 10)
   espera: AreaC (1, 1, 5,  1)
@@ -59,7 +34,6 @@ robots
       si (hayFlor)
         tomarFlor
         flor:= flor + 1
-      hayFlor:= HayFlorEnLaEsquina
       Pos(IniAv, IniCa)
       LiberarEsquina(Av, Ca)
     EnviarMensaje(flor, R5)
