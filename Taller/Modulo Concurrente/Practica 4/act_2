@@ -1,0 +1,96 @@
+programa act2
+procesos
+  proceso depositarPapeles(ES cant: numero)
+  variables
+    IniAv, IniCa: numero
+  comenzar
+    IniAv:= PosAv
+    IniCa:= PosCa
+    BloquearEsquina(50, 50)
+    Pos(50, 50)
+    mientras (cant <> 0)
+      depositarPapel
+      cant:= cant - 1
+    Pos(IniAv, IniCa)
+    LiberarEsquina(50, 50)
+  fin
+  proceso recogerCentro(E cant: numero; ES pude: boolean)
+  variables
+    IniAv, IniCa: numero
+    agarradas: numero
+  comenzar
+    agarradas:= 0
+    IniAv:= PosAv
+    IniCa:= PosCa
+    BloquearEsquina(50, 50)
+    Pos(50, 50)
+    recogerPapeles(pude, cant, agarradas)
+    si ~(pude)
+      repetir agarradas
+        depositarPapel
+    Pos(IniAv, IniCa)
+    LiberarEsquina(50, 50)
+  fin
+  proceso recogerPapeles(ES pude: boolean; E papelPedido: numero; ES papelActual: numero)
+  comenzar
+    mientras (HayPapelEnLaEsquina) & (papelActual <> papelPedido)
+      tomarPapel
+      papelActual:= papelActual + 1
+    pude:= (papelActual = papelPedido)
+  fin
+areas
+  areaProductor1: AreaP (5,1,5,100)
+  areaProductor2: AreaP (10,1,10,100)
+  areaConsumidor1: AreaP (11,1,11,1)
+  areaConsumidor2: AreaP (12,1,12,1)
+  areaRecoleccion: AreaPC (50,50,50,50)
+robots
+  robot Productor
+  variables
+    misPapeles: numero
+    pude: boolean
+  comenzar
+    misPapeles:= 0
+    mientras (PosCa < 100)
+      recogerPapeles(pude, 5, misPapeles)
+      si (pude)
+        depositarPapeles(misPapeles)
+      sino
+        mover
+    recogerPapeles(pude, 5, misPapeles)
+    si (pude)
+      depositarPapeles(misPapeles)
+  fin
+  robot Consumidor
+  variables
+    intentos, papelRandom: numero
+    pude: boolean
+  comenzar
+    intentos:= 0
+    mientras (intentos  <> 8)
+      Random(papelRandom, 2, 5)
+      recogerCentro(papelRandom, pude)
+      si ~(pude)
+        intentos:= intentos + 1
+      sino
+        repetir papelRandom
+          depositarPapel
+  fin
+variables
+  R1, R2: Productor
+  R3, R4: Consumidor
+comenzar
+  AsignarArea(R1, areaProductor1)
+  AsignarArea(R2, areaProductor2)
+  AsignarArea(R3, areaConsumidor1)
+  AsignarArea(R4, areaConsumidor2)
+  AsignarArea(R1, areaRecoleccion)
+  AsignarArea(R2, areaRecoleccion)
+  AsignarArea(R3, areaRecoleccion)
+  AsignarArea(R4, areaRecoleccion)  
+  Iniciar(R1, 5,1)
+  Iniciar(R2, 10,1)
+  Iniciar(R3, 11,1) 
+  Iniciar(R4, 12,1) 
+  
+fin

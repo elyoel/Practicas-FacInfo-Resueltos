@@ -1,0 +1,106 @@
+programa act4
+procesos
+  proceso recogerFlores
+  comenzar
+    Pos(PosAv, PosCa + 1)
+    mientras HayFlorEnLaBolsa
+      tomarFlor
+    Pos(PosAv, PosCa - 1)
+  fin
+  proceso avanzar
+  comenzar
+    mientras (HayFlorEnLaBolsa) & (PosCa < 100)
+      depositarFlor
+      mover
+  fin
+  proceso recibirCliente(E id: numero; ES flor: numero; ES Av: numero; ES Ca: numero)
+  comenzar
+    si (id = 1)
+      RecibirMensaje(flor, R1)
+      RecibirMensaje(Av, R1)
+      RecibirMensaje(Ca, R1)
+    sino
+      si (id = 2)
+        RecibirMensaje(flor, R2)
+        RecibirMensaje(Av, R2)
+        RecibirMensaje(Ca, R3)
+      sino
+        RecibirMensaje(flor, R3)
+        RecibirMensaje(Av, R3)
+        RecibirMensaje(Ca, R3)
+  fin
+  proceso entregarFlores(E Av: numero; E Ca: numero; E flor: numero)
+  comenzar
+    BloquearEsquina(Av, Ca)
+    Pos(Av, Ca)
+    repetir flor
+      depositarFlor
+    Pos(100, 100)
+    LiberarEsquina(Av, Ca)
+  fin
+  proceso confirmarCliente(E id: numero)
+  comenzar
+    si (id = 1)
+      EnviarMensaje(V, R1)
+    sino
+      si (id = 2)
+        EnviarMensaje(V, R2)
+      sino
+        EnviarMensaje(V, R3)
+  fin
+areas
+  ciudad: AreaC (1, 1, 100, 100)
+robots
+  robot cliente
+  variables
+    miId, cantFlor: numero
+    ACK: boolean
+  comenzar
+    RecibirMensaje(miId, R4)
+    mientras (PosCa < 100)
+      Random(cantFlor, 1, 4)
+      EnviarMensaje(miId, R4)
+      EnviarMensaje(cantFlor, R4)
+      EnviarMensaje(PosAv, R4)
+      EnviarMensaje((PosCa + 1), R4)
+      
+      RecibirMensaje(ACK, R4)
+      si (ACK)
+        recogerFlores
+        avanzar
+        si (PosCa = 100)
+          EnviarMensaje(miId, R4)
+          EnviarMensaje(0, R4)
+  fin
+  robot servidor
+  variables
+    contR: numero
+    florCli, AvCli, CaCli, idCli: numero
+  comenzar
+    EnviarMensaje(1, R1)
+    EnviarMensaje(2, R2)
+    EnviarMensaje(3, R3)
+    contR:= 0
+    mientras ~(conR = 3)
+      RecibirMensaje(idCli, *)
+      recibirCliente(idCli, florCli, AvCli, CaCli)
+      si (florCli <> 0)
+        entregarFlores(AvCli, CaCli, florCli)
+        confirmarCliente(idCli)
+      sino
+        contR:= contR + 1
+      
+  fin
+variables
+  R1, R2, R3: cliente
+  R4: servidor
+comenzar
+  AsignarArea(R1, ciudad)
+  AsignarArea(R2, ciudad)
+  AsignarArea(R3, ciudad)
+  AsignarArea(R4, ciudad)
+  Iniciar(R1, 1, 1)
+  Iniciar(R2, 2, 1)
+  Iniciar(R3, 3, 1)
+  Iniciar(R4, 4, 1)
+fin
