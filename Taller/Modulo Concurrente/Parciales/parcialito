@@ -1,0 +1,102 @@
+programa parcialito
+procesos
+  proceso recogerFlores(ES flor: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flor:= flor + 1
+  fin
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso depositarFlores(E flor: numero)
+  variables
+    IniAv, IniCa: numero
+  comenzar
+    IniAv:= PosAv
+    IniCa:= PosCa
+    repetir flor
+      BloquearEsquina(99, 99)
+      Pos(99, 99)
+      depositarFlor
+      Pos(IniAv, IniCa)
+      LiberarEsquina(99, 99)
+  fin
+  proceso peldanio(ES flor: numero)
+  comenzar
+    repetir 2
+      mover
+      recogerFlores(flor)
+    derecha
+    repetir 2
+      mover
+      recogerFlores(flor)
+    izquierda
+  fin
+  proceso escalones(E cant: numero; ES sinFlor: numero)
+  variables
+    flor: numero
+  comenzar
+    flor:= 0
+    recogerFlores(flor)
+    repetir cant
+      peldanio(flor)
+      si (flor = 0)
+        sinFlor:= sinFlor + 1
+      sino
+        depositarFlores(flor)
+      flor:= 0
+  fin      
+areas
+  areaFiscal: AreaP (1, 1, 1, 1)
+  area1: AreaP (2, 1, 12, 11)
+  area2: AreaP (20, 1, 30, 11)
+  area3: AreaP (40, 1, 50, 11)
+  depositoFlores: AreaPC(99, 99, 99, 99)
+robots
+  robot robot1
+  variables
+    cantEsca: numero
+    escalonSinFlor: numero
+  comenzar
+    escalonSinFlor:= 0
+    RecibirMensaje(cantEsca, Fiscal)
+    escalones(cantEsca, escalonSinFlor)
+    EnviarMensaje(escalonSinFlor, Fiscal)
+  fin
+  robot Fiscalizador
+  variables
+    aux: numero
+    escalonSinFlor: numero
+  comenzar
+    escalonSinFlor:= 0
+    Random(aux, 1,5)
+    EnviarMensaje(aux, R1)
+    Random(aux, 1,5)
+    EnviarMensaje(aux, R2)
+    Random(aux, 1,5)
+    EnviarMensaje(aux, R3)
+    repetir 3
+      RecibirMensaje(aux, *)
+      escalonSinFlor:= escalonSinFlor + aux
+    Informar(escalonSinFlor)
+  fin
+variables
+  R1, R2, R3: robot1
+  Fiscal: Fiscalizador
+comenzar
+  AsignarArea(R1, area1)
+  AsignarArea(R2, area2)
+  AsignarArea(R3, area3)
+  AsignarArea(Fiscal, areaFiscal)
+  AsignarArea(R1, depositoFlores)
+  AsignarArea(R2, depositoFlores)
+  AsignarArea(R3, depositoFlores)
+  AsignarArea(Fiscal, depositoFlores)
+  Iniciar(R1, 2,1)
+  Iniciar(R2, 20,1)
+  Iniciar(R3, 40,1)
+  Iniciar(Fiscal, 1,1)
+fin

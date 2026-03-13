@@ -1,0 +1,141 @@
+programa parcialito_14_19
+procesos
+  proceso recogerPapeles(ES papel: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papel:= papel + 1
+  fin
+  proceso depositarPapeles(E papel: numero)
+  variables
+    IniAv, IniCa: numero
+  comenzar
+    IniAv:= PosAv
+    IniCa:= PosCa
+    repetir (papel)
+      BloquearEsquina(3, 20)
+      Pos(3, 20)
+      depositarPapel
+      Pos(IniAv, IniCa)
+      LiberarEsquina(3, 20)
+  fin
+  proceso recogerPapelesEsquina(E papel: numero)
+  variables
+    IniAv, IniCa: numero
+  comenzar
+    IniAv:= PosAv
+    IniCa:= PosCa
+    Pos(3, 20)
+    repetir papel
+      tomarPapel
+    Pos(IniAv, IniCa)
+  fin
+  proceso actuMin(ES minId: numero; ES min: numero; E id: numero; E papel: numero)
+  comenzar
+    si (papel < min)
+      minId:= id
+      min:= papel
+  fin
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso recorrerCalle(E pasos: numero; ES papel: numero)
+  comenzar
+    derecha
+    repetir (pasos)
+      recogerPapeles(papel)
+      mover
+    recogerPapeles(papel)
+    izquierda
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot Recolector
+  variables
+    miId, papel: numero
+    puedo: boolean
+  comenzar
+    RecibirMensaje(miId, RJefe)
+    papel:= 0
+    
+    si (miId = 2)
+      RecibirMensaje(puedo, R1)
+    sino
+      si (miId = 3)
+        RecibirMensaje(puedo, R2)
+    
+    recorrerCalle(18 + miId, papel)
+    EnviarMensaje(miId, RJefe)
+    EnviarMensaje(papel, RJefe)
+    
+    
+    si (miId = 1)
+      EnviarMensaje(V, R2)
+      RecibirMensaje(puedo, R3)
+    sino
+      si (miId = 2)
+        EnviarMensaje(V, R3)
+        RecibirMensaje(puedo, R3)
+      sino
+        EnviarMensaje(V, R1)
+        EnviarMensaje(V, R2)
+        
+    depositarPapeles(papel)
+    EnviarMensaje(V, RJefe)
+    RecibirMensaje(puedo, RJefe)
+    si (puedo)
+      recogerPapelesEsquina(papel)
+  fin
+  robot Jefe
+  variables
+    minId, minPapel, unId, papel: numero
+    aux: boolean
+  comenzar
+    EnviarMensaje(1, R1)
+    EnviarMensaje(2, R2)
+    EnviarMensaje(3, R3)
+    minPapel:= 9999
+    repetir 3
+      RecibirMensaje(unId, *)
+      si (unId = 1)
+        RecibirMensaje(papel, R1)
+      sino
+        si (unId = 2)
+          RecibirMensaje(papel, R2)
+        sino
+          RecibirMensaje(papel, R3)
+      actuMin(minId, minPapel, unId, papel)
+    repetir 3
+      RecibirMensaje(aux, *)
+    Informar(minId)
+    si (minId = 1)
+      EnviarMensaje(V, R1)
+      EnviarMensaje(F, R2)
+      EnviarMensaje(F, R3)
+    sino
+      si (minId = 2)
+        EnviarMensaje(V, R2)
+        EnviarMensaje(F, R1)
+        EnviarMensaje(F, R3)
+      sino
+        EnviarMensaje(V, R3)
+        EnviarMensaje(F, R1)
+        EnviarMensaje(F, R2)
+  fin
+variables
+  R1, R2, R3: Recolector
+  RJefe: Jefe
+comenzar
+  AsignarArea(R1, ciudad)
+  AsignarArea(R2, ciudad)
+  AsignarArea(R3, ciudad)
+  AsignarArea(RJefe, ciudad)
+  Iniciar(R1, 1,2)
+  Iniciar(R2, 21,2)
+  Iniciar(R3, 42,2)
+  Iniciar(RJefe, 2,1)
+  
+fin
