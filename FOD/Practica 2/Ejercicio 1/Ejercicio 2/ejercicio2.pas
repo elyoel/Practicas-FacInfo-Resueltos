@@ -51,4 +51,35 @@ begin
 
         writeLn(mad, regm);
     end;
+    close(mae);
+    close(det);
 end;
+procedure cargar_minimos(var mae: maestro; var txt: Text);
+var
+    regm: producto;
+begin
+    rewrite(txt);
+    reset(mae);
+
+    while not(eof(mae)) do begin
+        readLn(mae, regm);
+        if (regm.stock_act < regm.stock_mim) then
+            write(regm.cod, ' ', regm.precio, ' ', regm.stock_min, ' ', regm.stock_act, ' ', regm.nombre));
+    end;
+
+    close(mae);
+    close(txt);
+end;
+var
+    mae: maestro;
+    det: detalle;
+begin
+    assing(det, 'detalle');
+    assing(mae, 'maestro');
+    assing(txt, 'stock_minimo.txt');
+
+    cargar_maestro(mae, det);
+    
+    cargar_minimos(mae, txt);
+
+end.
