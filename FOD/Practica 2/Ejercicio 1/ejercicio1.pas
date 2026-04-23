@@ -41,8 +41,8 @@ end;
 var
     det, mae: archivo;
 begin
-    assign(det, );
-    assign(mae, );
+    assign(det, 'detalle');
+    assign(mae, 'maestro');
 
     compactar_datos(mae, det);
 end.
