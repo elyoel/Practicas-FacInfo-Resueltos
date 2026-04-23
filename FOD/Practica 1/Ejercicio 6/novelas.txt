@@ -1,0 +1,40 @@
+101 25.50 Fantasía
+El Despertar del Dragón
+102 18.00 Romance
+Susurros del Viento
+103 30.00 Ciencia Ficción
+Crónicas de Marte
+104 12.50 Terror
+La Sombra del Altillo
+105 22.00 Misterio
+El Enigma del Reloj
+106 15.75 Aventura
+El Tesoro Perdido
+107 20.00 Drama
+Lágrimas de Cristal
+108 28.50 Histórica
+La Revolución del Olvido
+109 14.00 Policial
+El Caso de la Quinta Avenida
+110 32.00 Distopía
+El Último Refugio
+111 10.00 Humor
+Risas en el Espacio
+112 19.50 Realismo Mágico
+Cien Años de Arena
+113 16.00 Suspenso
+No Mires Atrás
+114 21.00 Fantasía Urbana
+Luces en la Ciudad
+115 11.50 Clásico
+El Eco de los Tiempos
+116 24.00 Biografía
+La Vida de un Soñador
+117 27.50 Cyberpunk
+Neon y Sombras
+118 13.00 Western
+El Forajido Solitario
+119 23.50 Terror Psicológico
+Dentro de la Mente
+120 26.00 Épico
+El Trono Vacío

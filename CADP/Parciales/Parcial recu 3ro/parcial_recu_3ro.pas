@@ -1,5 +1,6 @@
 program parcial_recu_3ro;
-dimF = 5;
+const
+    dimF = 5;
 type
     obra = record
         titulo: string;
