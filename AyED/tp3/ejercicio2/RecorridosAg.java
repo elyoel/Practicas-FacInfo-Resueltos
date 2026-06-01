@@ -2,18 +2,19 @@ package tp3.ejercicio2;
 
 import java.util.List;
 import java.util.ArrayList;
-import tp3.Queue;
+import java.util.Iterator;
 
+import tp1.ejercicio8.Queue;
 import tp3.GeneralTree;
 
 public class RecorridosAg {
 	private boolean verificar(Integer n, Integer valor) {
-		return (n % 2 == 0) && (valor > n);
+		return (n % 2 != 0) && (valor > n);
 	}
 
 	public List<Integer> numerosImparesMayoresQuePreOrden (GeneralTree <Integer> a, Integer n){
 		List<Integer> list = new ArrayList<>();
-		if (a != null)
+		if (a != null && a.isEmpty())
 			recorridoPreOrden(a, n, list);
 		return list;
 	}
@@ -27,7 +28,25 @@ public class RecorridosAg {
 		}
 	}
 	
-	//public List<Integer> numerosImparesMayoresQueInOrden (GeneralTree <Integer> a, Integer n){}
+	public List<Integer> numerosImparesMayoresQueInOrden (GeneralTree <Integer> a, Integer n){
+		List<Integer> ls = new ArrayList<>();
+		if (a != null && a.isEmpty())
+			recorridoInOrden(a, n, ls);
+		return ls;
+	}
+	private void recorridoInOrden(GeneralTree<Integer> ab, Integer n, List<Integer> ls) {
+		Iterator<GeneralTree<Integer>> children = ab.getChildren().iterator();
+		if (!ab.isLeaf()) {
+			recorridoInOrden(children.next(), n, ls);
+		}
+		int data = ab.getData();
+		if (verificar(n, data))
+			ls.add(data);
+
+		while (children.hasNext()) {
+			recorridoInOrden(children.next(), n, ls);	
+		}
+	}
 	
 	public List<Integer> numerosImparesMayoresQuePostOrden (GeneralTree <Integer> a, Integer n){
 		List<Integer> ls = new ArrayList<>();

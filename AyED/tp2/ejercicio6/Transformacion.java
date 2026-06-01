@@ -1,9 +1,15 @@
-package tp2.ejercicio5;
+package tp2.ejercicio6;
 
 import tp2.BinaryTree;
 
 public class Transformacion {
-	BinaryTree<Integer> ab;
+	protected BinaryTree<Integer> ab;
+	
+	
+	public void setAb (BinaryTree<Integer> ab) {
+		this.ab = ab;
+	}
+
 	private int sumaHijos(BinaryTree<Integer> ab) {
 		int sum = 0;
 		if (ab.hasLeftChild()) {
@@ -24,14 +30,14 @@ public class Transformacion {
 			ab2.addRightChild(new BinaryTree<Integer>());
 			recorrer(ab.getRightChild(), ab2.getRightChild());
 		}
-		ab2.setData(sumaHijos(ab) + this.ab.getData());
+		ab2.setData(sumaHijos(ab2) + ab2.getData());
 	}
 	
 	public BinaryTree<Integer> suma (){
 		BinaryTree<Integer> aux = new BinaryTree<>();
 		if (this.ab != null) {
 			if (ab.isLeaf()) {
-				aux.addLeftChild(new BinaryTree<Integer>(0));;
+				aux.setData(0);;
 			} else {
 				recorrer(this.ab, aux);
 			}
